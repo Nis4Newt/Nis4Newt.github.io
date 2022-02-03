@@ -1,6 +1,6 @@
 ---
 title: "카테고리"
 layout: categories
-permalink: /category/
+permalink: /categories/
 author_profile: false
 ---
