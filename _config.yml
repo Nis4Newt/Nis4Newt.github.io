@@ -103,7 +103,7 @@ analytics:
 # Site Author
 author:
   name             : "Newt"
-  avatar           : "/_images/bloghead/newt.jpg"
+  avatar           : "https://user-images.githubusercontent.com/46421475/152382445-b8e0862c-8e5d-487b-bd25-2e0781a25a13.jpg"
   bio              : "It's an **amazing** newt."
   location         : "S.Korea"
   email            : 
