@@ -1,5 +1,7 @@
 # main links
 main:
+  - title: "모아보기"
+    url: /categories/
   - title: "Unity"
     url: /categories/unity/
   - title: "GIT"
