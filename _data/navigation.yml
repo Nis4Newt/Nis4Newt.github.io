@@ -1,10 +1,6 @@
 # main links
 main:
   - title: "Unity"
-    url: /unity/
+    url: /categories/unity/
   - title: "GIT"
-    url: /git/
-  - title: "cate"
-    url: /category_archive/
-  - title: "git2"
-    url: /categories/
+    url: /categories/git/
