@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nis4newt.github.io/sitemap.xml
