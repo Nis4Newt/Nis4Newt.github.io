@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-04-05T01:31:54+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">‘N’ is for Newt</title><subtitle>&apos;N&apos; is for Newt</subtitle><author><name>Newt</name></author><entry><title type="html">[git][기초] git config</title><link href="http://localhost:4000/git/git1/" rel="alternate" type="text/html" title="[git][기초] git config" /><published>2022-02-08T00:00:00+09:00</published><updated>2022-02-16T09:00:00+09:00</updated><id>http://localhost:4000/git/git1</id><content type="html" xml:base="http://localhost:4000/git/git1/"><![CDATA[<h2 id="config-설정">config 설정</h2>
+<p>git config는 사용자 맞춤설정을 통해 git을 더 쉽고 편하게 사용 할 수 있도록 도와준다. <br />
+git의 설정을 추가/변경/삭제</p>
+
+<p>기본 폼 <code class="language-plaintext highlighter-rouge">git config</code></p>
+
+<h3 id="config-설정범위">config 설정범위</h3>
+<p>git config는 3가지의 범위로 나눌 수 있다.</p>
+
+<ol>
+  <li>System (전체 시스템)
+    <ul>
+      <li>모든 사용자와 모든 저장소에 적용되는 설정파일</li>
+      <li>C:\Program Files\Git\etc\gitconfig 파일</li>
+      <li><code class="language-plaintext highlighter-rouge">git config --system</code>를 통해 접근</li>
+    </ul>
+  </li>
+  <li>Global (사용자)
+    <ul>
+      <li>해당 사용자에게 적용되는 설정 파일</li>
+      <li>C:\Users\user.gitconfig 파일</li>
+      <li><code class="language-plaintext highlighter-rouge">git config --global</code>를 통해 접근</li>
+    </ul>
+  </li>
+  <li>Local (로컬저장소)(기본)
+    <ul>
+      <li>현재 작업중인 저장소의 git 디렉토리</li>
+      <li>디렉토리.git\config 파일</li>
+      <li><code class="language-plaintext highlighter-rouge">git config --local</code>를 통해 접근
+        <ul>
+          <li>범위 옵션을 지정하지않으면 기본적으로 –local이 적용된다</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<p>※각 config에 중복된 설정이 있다면 가장 좁은 범위의 설정이 우선시 된다</p>
+
+<hr />
+
+<h3 id="사용자-정보-설정">사용자 정보 설정</h3>
+<p>git을 설치하고 가장 먼저 해야하는 것은 사용자 이름과 이메일 주소를 설정하는 것이다. <br />
+git은 커밋 할 때마다 이 정보를 사용한다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git config --global user.name "smith"
+$ git config --global user.email smith@email.com
+</code></pre></div></div>
+<p><code class="language-plaintext highlighter-rouge">--global</code>로 설정한 사용자의 정보는 한번만 입력하면 커밋할때 시스템이 해당 정보를 사용한다. <br />
+만약 프로젝트에서 다른 사용자정보를 사용하고 싶다면 <code class="language-plaintext highlighter-rouge">--global</code> 옵션을 제외하고 새로 입력하면 된다.</p>
+
+<hr />
+
+<h3 id="git-기본-브랜치명-변경">git 기본 브랜치명 변경</h3>
+<p>master &lt;-&gt; main 간 기본브랜치명 변경 이슈도 있고 해서 추가</p>
+
+<h4 id="초기">초기</h4>
+<blockquote>
+  <p>비교적 최근 추가된 명령어</p>
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git config (--global) init.defaultBranch main
+</code></pre></div>  </div>
+  <p>위의 명령어를 통해 기본 브랜치를 main으로 설정할 수 있다.</p>
+
+  <p><strong>github</strong> <br />
+repository를 생성시 설정하거나 관련 setting에서 변경해 줄 수 있다.
+<img src="https://user-images.githubusercontent.com/46421475/154085274-f79f9499-636c-4215-a3b7-b34dd6dcb5d1.png" alt="git_post_1_0" /></p>
+
+  <p><img src="https://user-images.githubusercontent.com/46421475/154085287-bbb0a394-c4fd-4fc9-8888-9dada19e0fd9.png" alt="git_post_1_1" /></p>
+</blockquote>
+
+<h4 id="브랜치-변경-나중에-브랜치에서-자세하게">브랜치 변경 (나중에 브랜치에서 자세하게)</h4>
+
+<ol>
+  <li>원격저장소의 브랜치명에 맞춰 <code class="language-plaintext highlighter-rouge">로컬 저장소 브랜치명 변경</code>
+    <ul>
+      <li>로컬브랜치를 원격브랜치에 연결하고자 한다면 브랜치를 생성하는게 일반적이지만 혹시 브랜치명을 변경하고 싶다면</li>
+      <li><code class="language-plaintext highlighter-rouge">git branch -m oldbranch newbranch</code>를 통해 브랜치명을 변경 후 <code class="language-plaintext highlighter-rouge">git fetch</code></li>
+      <li>로컬 - 원격 브랜치명이 같다면 다른 작업없이도 알아서 연결된다.</li>
+    </ul>
+  </li>
+  <li>로컬저장소의 브랜치명에 맞춰 <code class="language-plaintext highlighter-rouge">원격 저장소 브랜치명 변경</code>
+    <ul>
+      <li>원격브랜치는 사실 로컬이 반영된 리포지토리이기에 브랜치명을 바꿀 일은 사실 거의 없다.</li>
+      <li>github를 통해 쉽게 브랜치명을 바꾸거나</li>
+      <li>로컬에서 oldbranch를 삭제하고 newbranch를 만드는 정도의 방법이 있다.</li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+
+<h3 id="alias">alias</h3>
+
+<p>config alias를 통해 명령어에 별칭을 지정할 수 있다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git config alias.co checkout
+$ git config alias.br branch
+$ git config alias.ci commit
+$ git config alias.st status
+</code></pre></div></div>
+<p>이와 같이 설정하면 <code class="language-plaintext highlighter-rouge">git ci</code>만으로 커밋 할 수 있다.</p>
+
+<p>단순 명령어 뿐아니라 <code class="language-plaintext highlighter-rouge">$ git config --global alias.last 'log -1 HEAD'</code> 처럼 구문자체도 사용할 수 있다. <br />
+개인적인 추리로는 alias를 사용하면 마치 인라인 함수처럼 <code class="language-plaintext highlighter-rouge">log -1 HEAD</code>(사용하려는 기능)이 <code class="language-plaintext highlighter-rouge">last</code>(alias) 대신 삽입되어 사용되는게 아닌가 싶다.</p>
+
+<p><strong>외부 명령어</strong> <br />
+alias는 git의 명령어 뿐 아니라 외부명령어도 실행 할 수 있다. <br />
+외부명령어는 명령어 앞에 <code class="language-plaintext highlighter-rouge">!</code>를 붙여 사용하고 명령어도 <code class="language-plaintext highlighter-rouge">''</code>로 감싸줘야 한다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git config alias.make '!vi'
+$ git make somefile.txt
+  =&gt; vi somefile.txt 와 동일
+</code></pre></div></div>
+
+<hr />
+
+<p>&lt;부록&gt;</p>
+
+<p><img src="https://user-images.githubusercontent.com/46421475/154095411-ea9c5fa1-8d82-404b-a206-923e0afc8fdd.jpg" alt="git1" class="align-center" /></p>
+<div align="center">  
+  마무리 짱구
+</div>]]></content><author><name>Newt</name></author><category term="git" /><category term="config" /><category term="git config" /><summary type="html"><![CDATA[config 설정 git config는 사용자 맞춤설정을 통해 git을 더 쉽고 편하게 사용 할 수 있도록 도와준다. git의 설정을 추가/변경/삭제]]></summary></entry><entry><title type="html">8일 포스트</title><link href="http://localhost:4000/git/eight/" rel="alternate" type="text/html" title="8일 포스트" /><published>2022-02-08T00:00:00+09:00</published><updated>2022-02-08T00:00:00+09:00</updated><id>http://localhost:4000/git/eight</id><content type="html" xml:base="http://localhost:4000/git/eight/"><![CDATA[<h1 id="8일-포스트">8일 포스트</h1>
+
+<p>md문서</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
+</code></pre></div></div>]]></content><author><name>Newt</name></author><category term="git" /><summary type="html"><![CDATA[8일 포스트]]></summary></entry><entry><title type="html">[git][기초] git 사용을 위한 CLI 환경</title><link href="http://localhost:4000/git/git0/" rel="alternate" type="text/html" title="[git][기초] git 사용을 위한 CLI 환경" /><published>2022-02-07T00:00:00+09:00</published><updated>2022-02-07T09:00:00+09:00</updated><id>http://localhost:4000/git/git0</id><content type="html" xml:base="http://localhost:4000/git/git0/"><![CDATA[<h2 id="환경">환경</h2>
+
+<h3 id="콘솔--터미널">콘솔 / 터미널</h3>
+<p>유닉스 기반의 대형 컴퓨터에서 사용자들이 컴퓨터에 접속하기 위해 사용했다.
+사용자들이 사용했던 단말기를 터미널, 실질적 입출력장치를 콘솔이라고 하지 않았나 싶다.</p>
+
+<p>찾아보면서도 뭔가 설명이 서로다르고 모호한 부분이 있었는데 <br />
+예를 들면 [서버 - 대형컴퓨터] [플스 - 터미널] [패드/모니터 - 콘솔]</p>
+
+<p><strong>터미널</strong></p>
+<ul>
+  <li>초기에 컴퓨터에 접속하여 시스템에서 데이터를 입/출력하기 위해 사용했던 단말기</li>
+  <li>하드웨어와 소프트웨어 전반을 통합하여 불렀던 것으로 생각된다.</li>
+  <li>가상 터미널 : 하드웨어 단말기를 소프트웨어적으로 구현한 가상 콘솔로 응용 프로그램</li>
+  <li>태생 S/W - 텍스트 기반
+    <ul>
+      <li>터미널 프로그램으로 남아있는 것으로 보아 SW적인 면모가 핵심으로 살아남은 것 같다.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>콘솔 (시스템 콘솔)</strong></p>
+<ul>
+  <li>모니터 + 키보드등 입출력이 조합된 장치</li>
+  <li>시스템을 물리적으로 조작 할 수 있는 체계</li>
+  <li>태생 H/W</li>
+</ul>
+
+<hr />
+
+<h3 id="컴퓨터---사용자간의-상호작용-방식">컴퓨터 - 사용자간의 상호작용 방식</h3>
+
+<ol>
+  <li>CLI(Commend Line Interface) 명령줄 인터페이스
+    <ul>
+      <li>터미널을 통해 문자열로 사용자와 컴퓨터가 상호작용하는 방식</li>
+      <li>대표적으로 명령 프롬프트(CMD), bash(유닉스 셸)</li>
+    </ul>
+  </li>
+  <li>GUI(Graphical User Interface)
+    <ul>
+      <li>그림, 그래픽을 사용하는 방식으로 현재 주로 사용되는 방식</li>
+      <li>윈도우</li>
+    </ul>
+  </li>
+  <li>TUI(Text를 이용한 그래픽)
+    <ul>
+      <li>CLI와 GUI의 사이</li>
+      <li>Text를 사용해 이미지처럼 만듬</li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+
+<h3 id="git-사용을-위한-cli환경">GIT 사용을 위한 CLI환경</h3>
+
+<p><strong>shell</strong></p>
+<ul>
+  <li>터미널을 사용하기 위한 소프트웨어 환경</li>
+  <li>운영 체제에서 커널과 이용자 사이에 끼어서 이용자의 명령을 해석하고 그 처리 결과를 뿌려주는 시스템 프로그램</li>
+  <li><strong>명령 프롬프트(CMD)</strong></li>
+  <li>Microsoft Windows의 기본 유틸리티로, Windows NT 계열 OS의 커맨드라인 해석기(CLI)</li>
+  <li>명령줄을 통해 모든 git 기능을 사용가능</li>
+  <li>cmd에 익숙하고 windows에서만 작업하는 경우 유용</li>
+  <li>과거 DOS 에서 부터 이어져 오는 윈도우즈의 쉘(지금은 Power shell이 윈도우의 기본 쉘)</li>
+  <li><strong>bash(유닉스 shell)</strong></li>
+  <li>리눅스, 맥 OS X 그리고 다윈 등 운영 체제의 기본 쉘</li>
+  <li>엄밀히는 프로그래밍 언어지만 범용언어라기 보다는 유닉스의 인터페이스 shell이라고 한다.</li>
+  <li>git bash를 통해 window에서 리눅스 커맨드를 함께 사용할 수 있다.</li>
+  <li>그 외
+    <ul>
+      <li>Power shell / VS Code 등에서도 동작</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<p>&lt;부록&gt;</p>
+
+<p><img src="https://user-images.githubusercontent.com/46421475/152847786-72f612a4-93c0-4d73-adf3-e08789782d3c.jpg" alt="git0" class="align-center" /></p>
+<div align="center">  
+  마무리 짱구
+</div>]]></content><author><name>Newt</name></author><category term="git" /><category term="CLI" /><category term="git bash" /><summary type="html"><![CDATA[환경]]></summary></entry><entry><title type="html">6일 포스트</title><link href="http://localhost:4000/git/six/" rel="alternate" type="text/html" title="6일 포스트" /><published>2022-02-06T00:00:00+09:00</published><updated>2022-02-06T00:00:00+09:00</updated><id>http://localhost:4000/git/six</id><content type="html" xml:base="http://localhost:4000/git/six/"><![CDATA[<h1 id="6일-포스트">6일 포스트</h1>
+
+<p>md문서</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+</code></pre></div></div>]]></content><author><name>Newt</name></author><category term="git" /><summary type="html"><![CDATA[6일 포스트]]></summary></entry><entry><title type="html">[Unity] 컴파일 방식 - IL2CPP</title><link href="http://localhost:4000/unity/unity0/" rel="alternate" type="text/html" title="[Unity] 컴파일 방식 - IL2CPP" /><published>2022-02-06T00:00:00+09:00</published><updated>2022-02-06T09:00:00+09:00</updated><id>http://localhost:4000/unity/unity0</id><content type="html" xml:base="http://localhost:4000/unity/unity0/"><![CDATA[<h4 id="il2cpp">IL2CPP</h4>
+<p>il2cpp는 Unity에서 개발한 (스크립팅 백엔드)AOT 컴파일러로, IL to CPP라는 의미 <br />
+Unity가 <strong>스크립트와 어셈블리의 IL코드를 C++ 코드로 변환</strong>시켜 선택한 플랫폼에 적합한 네이트브 바이너리 파일로 만듭니다. <br />
+IL2CPP는 Unity 프로젝트의 성능, 보안 및 플랫폼 호환성을 개선하는 등의 용도로 사용됩니다.</p>
+
+<p>보안관련하여 IL2CPP로 빌드하게 되면 코드가 난독화되어 디컴파일시 코드가 바로 노출되지 않습니다. (최소한의 보안)</p>
+
+<ul>
+  <li><a href="https://docs.unity3d.com/kr/2018.4/Manual/IL2CPP.html">유니티 매뉴얼</a></li>
+</ul>
+
+<p><strong>Mono의 문제점</strong></p>
+<ul>
+  <li>C# runtime performance가 C/C++에 비해 여전히 느리다.</li>
+  <li>최신 버전의 .NET언어를 Mono에서 지원하기 힘들다.</li>
+  <li>다양한 플랫폼 아키텍처에 맞추기위한 포팅, 유지보수등의 작업에 너무 많은 노력이 든다.</li>
+  <li>실행 중 GC가 멈출 수도 있다.</li>
+  <li>IOS 앱스토어에 APK 등록시 armv7과 armv8 두 버전을 모두 등록해야 하는데(정책) Mono는 armv8(arm64)를 지원하지 못한다.</li>
+  <li>IOS가 JIT(Just in time) 컴파일 방식을 지원하지 않음에 따라 AOT(Ahead of time) 컴파일 방식을 사용하는 IL2CPP가 대두되었다.</li>
+</ul>
+
+<hr />
+
+<h4 id="il-코드">&lt;IL 코드&gt;</h4>
+
+<p>C# 코드를 빌드하면 MSIL이라는 중간코드(Intermediate Language)를 만들어 냅니다. 프로그램 실행시 이 IL 코드는 JIT Compiler에 의해 컴파일 되어 Native코드로 변경됩니다. IL 방식의 가장 큰 장점은 실행 머신 환경에 관계없이 동일 코드를 실행 할 수 있다는 것입니다. 하지만 실행시 IL코드를 컴파일 해야하기 때문에 속도가 저하의 원인이 된다는 단점도 있습니다. .NET에서는 이러한 문제를 해결하기 위해 프로그램 실행시 전체 IL코드를 컴파일하는 것이 아니라 호출되는 메서드단위로 컴파일을 실행합니다. 따라서 어떤 메서드가 한번도 호출되지 않는다면 해당 메서드는 Native 코드로 변경되지 않습니다.</p>
+
+<p>MSIL  :  MS에서 나온 IL <br />
+CIL    :  Common Intermediate Language</p>
+
+<hr />
+
+<h4 id="il2cpp-작동방식">&lt;IL2CPP 작동방식&gt;</h4>
+<ol>
+  <li>Unity 스크립팅 API코드를 일반 .NET DLL로 컴파일</li>
+  <li>관리되는 바이트코드 스트리핑을 적용 -&gt; 빌드된 게임의 크기를 크게 줄여줍니다.</li>
+  <li>모든 관리되는 어셈블리를 표준 C++ 코드로 전환</li>
+  <li>생성된 C++코드와 IL2CPP의 런타임 부분을 네이티브 플랫폼 컴파일러로 컴파일</li>
+  <li>대상 플랫폼에 따라 실행 가능한 파일이나 DLL에 코드를 연결</li>
+</ol>
+
+<p><img src="https://user-images.githubusercontent.com/46421475/154095195-23818921-026f-43a0-89fd-f2767a102dc3.png" alt="il2cpp" /></p>
+
+<ul>
+  <li><a href="https://docs.unity3d.com/kr/2018.4/Manual/IL2CPP-HowItWorks.html">작동방식 문서</a></li>
+</ul>
+
+<hr />
+
+<h4 id="il2cpp-빌드-시간-최적화">&lt;IL2CPP 빌드 시간 최적화&gt;</h4>
+
+<ol>
+  <li>증분 빌드 사용
+    <ul>
+      <li>증분 빌드를 사용하면 C++ 컴파일러가 마지막 빌드 후 변경된 파일만 다시 컴파일한다고 합니다.</li>
+      <li>사용하려면 (대상 디렉토리를 삭제하지 않고) 프로젝트를 이전 빌드 위치에 빌드합니다.</li>
+    </ul>
+  </li>
+  <li>멀웨어 차단 소프트웨어 검사에서 프로젝트 및 대상 빌드 폴더 제외
+    <ul>
+      <li>Unity Technologies의 테스트 결과,</li>
+      <li>Windows 10에서 Windows Defender를 비활성화 후 빌드시간이 50-66% 단축됬다고 합니다.</li>
+    </ul>
+  </li>
+  <li>SSD에 프로젝트와 대상 빌드 폴더 저장
+    <ul>
+      <li>스토리지 디바이스가 더 빠르면 처리 속도가 빨라집니다.</li>
+    </ul>
+  </li>
+</ol>
+
+<ul>
+  <li><a href="https://docs.unity3d.com/kr/2018.4/Manual/IL2CPP-OptimizingBuildTimes.html">빌드 최적화 문서</a></li>
+</ul>
+
+<hr />
+
+<p>&lt;부록&gt;</p>
+
+<p><a href="http://linforum.kr/bbs/board.php?bo_table=android&amp;wr_id=4&amp;sca=%EA%B0%95%EC%A2%8C&amp;page=2">IL2CPP 해킹</a></p>
+
+<p><img src="https://user-images.githubusercontent.com/46421475/152694310-60b9fbdc-60d1-4941-8d18-136e355e9e26.png" alt="unity0" class="align-center" /></p>
+<div align="center">  
+  마무리 짱구
+</div>]]></content><author><name>Newt</name></author><category term="unity" /><category term="il2cpp" /><category term="unity" /><summary type="html"><![CDATA[IL2CPP il2cpp는 Unity에서 개발한 (스크립팅 백엔드)AOT 컴파일러로, IL to CPP라는 의미 Unity가 스크립트와 어셈블리의 IL코드를 C++ 코드로 변환시켜 선택한 플랫폼에 적합한 네이트브 바이너리 파일로 만듭니다. IL2CPP는 Unity 프로젝트의 성능, 보안 및 플랫폼 호환성을 개선하는 등의 용도로 사용됩니다.]]></summary></entry><entry><title type="html">GitBlog 둘기화</title><link href="http://localhost:4000/git/row/" rel="alternate" type="text/html" title="GitBlog 둘기화" /><published>2022-02-05T00:00:00+09:00</published><updated>2022-02-05T00:00:00+09:00</updated><id>http://localhost:4000/git/row</id><content type="html" xml:base="http://localhost:4000/git/row/"><![CDATA[<h1 id="깃블로그-둘기화">깃블로그 둘기화</h1>
+
+<p>md문서</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</code></pre></div></div>]]></content><author><name>Newt</name></author><category term="git" /><summary type="html"><![CDATA[깃블로그 둘기화]]></summary></entry></feed>
