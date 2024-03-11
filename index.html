@@ -166,11 +166,11 @@
 
         <div class="archive">
           <h1 id="page-title" class="page__title"></h1>
-          <h3 class="archive__subtitle">최근 포스트</h3>
+          <h3 class="archive__subtitle">최근 포스트 5</h3>
 
           <div class="entries-list"></div>
             {% assign sorted_posts = site.posts | sort: 'date' | reverse %}
-            {% for post in sorted_posts %}
+            {% for post in sorted_posts limit: 5 %}
             <div class="list__item">
               <article class="archive__item" itemscope
                 itemtype="https://schema.org/CreativeWork">
