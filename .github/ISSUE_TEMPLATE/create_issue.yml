@@ -1,0 +1,19 @@
+name: 이슈 만들기
+description: 그냥 이슈 만들기
+body:
+  - type: markdown
+    attributes:
+      value: |
+        깃 허브는 이슈만들어서 뭐하는지 아직은 잘 모르겠지만
+        알아서 잘 작성하도록
+
+  - type: textarea
+    id: information
+    attributes:
+      label: 이슈의 내용은 뭔가요?
+      description: |
+        이슈에 내용에 대해 작성해주세요
+      value: |-
+        - 내용 작성
+    validations:
+      required: false
