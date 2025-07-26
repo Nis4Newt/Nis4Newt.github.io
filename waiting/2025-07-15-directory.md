@@ -1,0 +1,154 @@
+---
+title: "[GitBlog] Directory 구조 설명"
+# layout: single
+categories: git blog
+tag: 
+  - html
+  - gitblog
+
+last_modified_at: 2023-09-04T00:00:00-00:00
+---
+
+#### 프로젝트 내의 폴더, 파일
+
+- 📁.git
+- 📁.github
+  - 깃 연동 폴더
+  - 블로그와는 연관 없음
+- 📁.jekyll-cache
+  - jekyll로 빌드하며 처리된 결과 캐시
+  - 첫 시도에서 모든 결과를 캐시하고 이후부터는 변경된 내용만 처리, 저장
+  - 캐시를 삭제
+    - jekyll clean
+  - '_config.yml'에서 캐시 설정
+    - incremental: true (증분 빌드 활성화)
+- 📁_data
+  - 설정값 저장
+- 📁_includes
+  - HTML 코드 재사용을 위한 저장소
+- 📁_layouts
+  - 블로그에서 사용되는 페이지들의 구조
+    - posts.html : 포스트를 위한 기본구조
+    - search.html : 검색창을 위한 기본구조? 일듯
+- 📁_pages
+  - 어떤 특정한 페이지를 보여줄때 사용하는듯
+    - About 페이지, 연락처 페이지 등...
+- 📁_posts
+  - 내가 작성한 포스트들
+- 📁_sass
+  - SASS (Syntactically Awesome Style Sheets : 구문적으로 멋진 스타일 시트)
+     - CSS 전처리기의 일종
+        - 폴더 내부를 살펴보면 .scss파일들로 구성되어 있음
+        - sass는 scss 전처리기 도구 자체의 이름이자, 도구가 제공하는 문법 형식을 모두 포함하는 개념
+        - scss는 sass가 제공하는 문법 형식중 하나로 sass를 사용한다고 하면 대부분 scss를 의미하고, 사실상 scss가 표준이다.
+     - CSS를 만들기 위한 모듈
+     - .scss는 css와 완전히 호환되는 문법
+     - CSS는 .scss의 믹스인(mixin)과 같이 복합적인 상태 저장, 코드 블록 재활용 기능이 없음
+        - scss는 해당 기능을 제공하여 css에서 중복 사용 코드를 모듈화하여 사용
+- 📁_site
+   - jekyll이 만든 '최종 웹사이트'
+   - _site 폴더 구조 = 웹 블로그에서의 URL 계층 구조
+      - 사용자가 `nis4newt.github.io/git/gitconfig-fin/`에 접속한다면
+      - 웹서버가 `_site/git/gitconfig-fin/index.html` 파일을 찾아서 브라우저에 전송해줌
+- 📁assets
+   - 보니까 assets 폴더는 그냥 파일 모아놓은 폴더
+   - 실제 정적사이트 빌드와는 관련이 없음.
+   - css, js, 이미지등 구성에 필요한 파일들을 모아놓고 사용지에는 경로를 지정하여 사용함
+   - 언더스코어(_)로 시작하는 폴더들은 jekyll에서 특별한 의미를 가진 예약된 폴더명
+- 📄.editorconfig
+   - 코드 스타일 통일을 위한 설정 파일
+   - git이나 정적 블로그 생성과 직접적인 관련은 없음
+   - ex
+      - indent_style = space  # 탭 대신 스페이스 사용
+      - indent_size = 2       # 들여쓰기 2칸 
+- 📄.gitattributes
+- 📄.gitignore
+   - git 관련 파일, 정적 블로그 생성과 관련 없음
+- 📄_config.yml
+   - 환경설정 파일 ≒ Jekyll 사이트의 모든 설정을 관리하는 마스터 파일
+   - 전역 설정으로 사이트 전체에 적용
+   - 수정 후 서버 재시작 팔요
+   - 여러가지 설정이 포함되어 있음
+     - 타이틀
+     - 페이지네이션 개수
+     - sass의 dir 폴더 이름 등..
+     - 한번 살펴보면 좋을듯
+- 📄feed.xml
+   - RSS 피드를 생성하는 Jekyll 템플릿 파일
+   - RSS를 사용안할거면 없어도 되는데, 없으나 있으나 비슷?해서 그냥 냄김 
+   - RSS 
+      - Rich Site Summary : 풍부한 사이트 요약
+      - Really Simple Syndication : 간단한 신디케이션
+         - syndication : 어떤 콘텐츠나 권리를 여러 방송사나 매체에 배포하거나 판매하는 것
+      - 웹사이트의 업데이트된 콘텐츠를 사용자가 쉽게 구독하고 받아볼 수 있도록 표준화된 형식
+   - 주로 XML형식으로 되어 있으며, 웹사이트의 최신 게시물, 기사, 요약, 링크등의 정보를 담고 있음
+   - 이 RSS 파일을 `RSS피드`라고 부름
+- 📄Gemfile
+- 📄Gemfile.lock
+   - Gemfile : 의존성 명세서
+      - 필요한 Ruby gem들을 명시, 버전 요구사항 지정
+      - 개발자가 직접 편집하는 파일
+      - `bundle install` 실행시 Bundler가 의존성을 해결하고 Gemfile.lock 생성
+   - Gemfile.lock
+      - 버전관리에 포함되며 동일한 버전을 유지 가능하도록
+      - Bundler가 생성하는 파일, 임의 수정 금지
+   - Gemfile은 일종의 요청서로 bundler가 이를 기반으로 Gemfile.lock이라는 실제 해결된 버전 스냅샷을 만드는것
+   - 버전을 고정하고 재현가능한 빌드 환경을 보장
+   - 마지막으로 bundle install 했을때 성공한 조합이자 모든 의존성 충돌이 해결된 안정적인 상태
+- 📄index.md
+   - 웹사이트의 첫 페이지 정의
+   - 여기서는 작성된 `layout: home`에 따라 home.html을 불러와서 사용하게 됨
+- 📄LICENSE
+   - MIT 라이선스를 명시하는 법적 문서
+- 📄minimal-mistakes-jekyll.gemspec
+   - minimal-mistakes 테마를 Ruby Gem으로 정의하는 명세서
+      - 테마의 정보
+      - 필요한 도구 목록
+      - 포함된 파일 목록
+   - `bundle install`시 gemspec을 확인하고 테마에 필요한 플러그인 설치
+   - Gemfile과 동작이 비슷하지만 해당파일은 테마에 대해서만 적용
+      - 특정 테마를 중심으로 블로그를 운영해나가고 테마의 업데이트를 적용할 생각이라면 건드리지 말고 유지하는 편이 좋음
+      - 테마를 설치하긴 했지만 따라갈 생각없고 개인적으로 운용할것이라면 수정해도 상관없..지만! gemspec보다는 Gemfile을 수정하는 방식을 먼저 적용하도록. (아직은 굳이 건드릴 필요X)
+- 📄package.json
+- 📄package-lock.json
+   - Node.js/JavaScript 프로젝트의 의존성 관리 파일?
+   - package.json      
+      - 여러 js파일을 읽고, 하나로 합쳐서 main.min.js로 저장
+      - 압축하여 파일 크기를 줄이고 로딩속도를 단축
+      - HTML(뼈대) + CSS(스타일) + JavaScript(기능) => 웹 페이지
+         - 브라우저가 HTML로 사이트를 구성해도 동작이 안됨
+         - main.css, main.min.js 파일이 필요
+      - 기능을 추가하려면
+         - 별도의 JS 파일을 생성해서 HTML에서 불러와서 사용
+   - package-lock.json
+      - Gemfile.lock과 같은 역할
+      - 정확한 버전 고정, 재현 가능한 환경 보장
+- 📄Rakefile
+   - Rake 빌드 도구를 위한 설정 파일
+      - Make(C/C++)의 Ruby 버전 = Rake
+   - 복잡한 프로젝트에서 유용
+   - jekyll 명령어로 충분 -> 복잡한 자동화가 필요하면 Rake 활용
+- 📄README.md
+   - 테마 설치 가이드
+- 📄robots.txt
+   - 웹 크롤러에게 지시사항(허용/차단 규칙)을 제공하는 파일
+   - 검색엔진이 어디를 크롤링할지 결정
+- 📄sitemap.xml
+   - 검색엔진에게 사이트의 모든 페이지 목록과 정보를 제공하는 XML 파일
+   - robots.txt가 허용한 페이지 정보를 보냄
+   - sitemap.xml 구조대로 크롤러에 제공
+   - 검색엔진이 뭘 크롤링할지 안내
+- 📄staticman.yml
+   - Staticman 서비스를 위한 설정 파일
+   - Staticman 서비스 : 정적 사이트에 동적 댓글 기능 추가하는 서비스
+
+#### 제거된 폴더나 파일
+
+- 📄.travis.yml
+   - Travis CI 설정파일
+   - 현 프로젝트에서는 사용되지 않음
+   - 해당 파일에서 `bundle exec jekyll algolia` 스크립트 실행
+      - `algolia`는 사이트 내에 Google같은 검색 기능을 추가해주는 서비스
+- 📄banner.js
+   - `Minimal Mistakes 테마`에 대한 저작권 표시를 추가하는 스크립트
+   - 어차피 저작권은 `main.min.js`에 포한되어 있고 `banner.js`는 그 표시를 생성하는 것 뿐
